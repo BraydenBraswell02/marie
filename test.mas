@@ -1,0 +1,637 @@
+ORG 100
+
+/ Test 1: Load positive; expected AC = 1.
+Load One
+Store Actual
+Subt Expect1
+Skipcond 400
+Jump Fail1
+Load Passed
+Add One
+Store Passed
+Load ID1
+Output
+Jump Next1
+Fail1, Load Zero
+Output
+Next1, Load Zero
+
+/ Test 2: Load negative; expected AC = -1.
+Load MinusOne
+Store Actual
+Subt Expect2
+Skipcond 400
+Jump Fail2
+Load Passed
+Add One
+Store Passed
+Load ID2
+Output
+Jump Next2
+Fail2, Load Zero
+Output
+Next2, Load Zero
+
+/ Test 3: Store writes memory; expected AC = 2.
+Load Two
+Store Scratch
+Load Zero
+Load Scratch
+Store Actual
+Subt Expect3
+Skipcond 400
+Jump Fail3
+Load Passed
+Add One
+Store Passed
+Load ID3
+Output
+Jump Next3
+Fail3, Load Zero
+Output
+Next3, Load Zero
+
+/ Test 4: Store preserves AC; expected AC = 2.
+Load Two
+Store Scratch
+Store Actual
+Subt Expect4
+Skipcond 400
+Jump Fail4
+Load Passed
+Add One
+Store Passed
+Load ID4
+Output
+Jump Next4
+Fail4, Load Zero
+Output
+Next4, Load Zero
+
+/ Test 5: Add: 1 + 2; expected AC = 3.
+Load One
+Add Two
+Store Actual
+Subt Expect5
+Skipcond 400
+Jump Fail5
+Load Passed
+Add One
+Store Passed
+Load ID5
+Output
+Jump Next5
+Fail5, Load Zero
+Output
+Next5, Load Zero
+
+/ Test 6: Add negative: 3 + (-1); expected AC = 2.
+Load Three
+Add MinusOne
+Store Actual
+Subt Expect6
+Skipcond 400
+Jump Fail6
+Load Passed
+Add One
+Store Passed
+Load ID6
+Output
+Jump Next6
+Fail6, Load Zero
+Output
+Next6, Load Zero
+
+/ Test 7: Subt: 5 - 1; expected AC = 4.
+Load Five
+Subt One
+Store Actual
+Subt Expect7
+Skipcond 400
+Jump Fail7
+Load Passed
+Add One
+Store Passed
+Load ID7
+Output
+Jump Next7
+Fail7, Load Zero
+Output
+Next7, Load Zero
+
+/ Test 8: Subt: 1 - 2; expected AC = -1.
+Load One
+Subt Two
+Store Actual
+Subt Expect8
+Skipcond 400
+Jump Fail8
+Load Passed
+Add One
+Store Passed
+Load ID8
+Output
+Jump Next8
+Fail8, Load Zero
+Output
+Next8, Load Zero
+
+/ Test 9: Clear nonzero AC; expected AC = 0.
+Load Five
+Clear
+Store Actual
+Subt Expect9
+Skipcond 400
+Jump Fail9
+Load Passed
+Add One
+Store Passed
+Load ID9
+Output
+Jump Next9
+Fail9, Load Zero
+Output
+Next9, Load Zero
+
+/ Test 10: LoadI follows pointer to 6; expected AC = 6.
+LoadI PtrSix
+Store Actual
+Subt Expect10
+Skipcond 400
+Jump Fail10
+Load Passed
+Add One
+Store Passed
+Load ID10
+Output
+Jump Next10
+Fail10, Load Zero
+Output
+Next10, Load Zero
+
+/ Test 11: AddI: 2 + indirect 3; expected AC = 5.
+Load Two
+AddI PtrThree
+Store Actual
+Subt Expect11
+Skipcond 400
+Jump Fail11
+Load Passed
+Add One
+Store Passed
+Load ID11
+Output
+Jump Next11
+Fail11, Load Zero
+Output
+Next11, Load Zero
+
+/ Test 12: StoreI preserves AC; expected AC = 6.
+Load Six
+StoreI PtrTarget
+Store Actual
+Subt Expect12
+Skipcond 400
+Jump Fail12
+Load Passed
+Add One
+Store Passed
+Load ID12
+Output
+Jump Next12
+Fail12, Load Zero
+Output
+Next12, Load Zero
+
+/ Test 13: StoreI writes target; expected AC = 6.
+Load Target
+Store Actual
+Subt Expect13
+Skipcond 400
+Jump Fail13
+Load Passed
+Add One
+Store Passed
+Load ID13
+Output
+Jump Next13
+Fail13, Load Zero
+Output
+Next13, Load Zero
+
+/ Test 14: StoreI does not overwrite pointer; expected AC = 0.
+Load PtrTarget
+Subt AddrTarget
+Store Actual
+Subt Expect14
+Skipcond 400
+Jump Fail14
+Load Passed
+Add One
+Store Passed
+Load ID14
+Output
+Jump Next14
+Fail14, Load Zero
+Output
+Next14, Load Zero
+
+/ Test 15: Skipcond 000 with negative AC; expected AC = 1.
+Load MinusOne
+Skipcond 000
+Jump False15
+Load One
+Jump End15
+False15, Load Zero
+End15, Store Scratch
+Store Actual
+Subt Expect15
+Skipcond 400
+Jump Fail15
+Load Passed
+Add One
+Store Passed
+Load ID15
+Output
+Jump Next15
+Fail15, Load Zero
+Output
+Next15, Load Zero
+
+/ Test 16: Skipcond 000 with zero AC; expected AC = 0.
+Load Zero
+Skipcond 000
+Jump False16
+Load One
+Jump End16
+False16, Load Zero
+End16, Store Scratch
+Store Actual
+Subt Expect16
+Skipcond 400
+Jump Fail16
+Load Passed
+Add One
+Store Passed
+Load ID16
+Output
+Jump Next16
+Fail16, Load Zero
+Output
+Next16, Load Zero
+
+/ Test 17: Skipcond 000 with positive AC; expected AC = 0.
+Load One
+Skipcond 000
+Jump False17
+Load One
+Jump End17
+False17, Load Zero
+End17, Store Scratch
+Store Actual
+Subt Expect17
+Skipcond 400
+Jump Fail17
+Load Passed
+Add One
+Store Passed
+Load ID17
+Output
+Jump Next17
+Fail17, Load Zero
+Output
+Next17, Load Zero
+
+/ Test 18: Skipcond 400 with negative AC; expected AC = 0.
+Load MinusOne
+Skipcond 400
+Jump False18
+Load One
+Jump End18
+False18, Load Zero
+End18, Store Scratch
+Store Actual
+Subt Expect18
+Skipcond 400
+Jump Fail18
+Load Passed
+Add One
+Store Passed
+Load ID18
+Output
+Jump Next18
+Fail18, Load Zero
+Output
+Next18, Load Zero
+
+/ Test 19: Skipcond 400 with zero AC; expected AC = 1.
+Load Zero
+Skipcond 400
+Jump False19
+Load One
+Jump End19
+False19, Load Zero
+End19, Store Scratch
+Store Actual
+Subt Expect19
+Skipcond 400
+Jump Fail19
+Load Passed
+Add One
+Store Passed
+Load ID19
+Output
+Jump Next19
+Fail19, Load Zero
+Output
+Next19, Load Zero
+
+/ Test 20: Skipcond 400 with positive AC; expected AC = 0.
+Load One
+Skipcond 400
+Jump False20
+Load One
+Jump End20
+False20, Load Zero
+End20, Store Scratch
+Store Actual
+Subt Expect20
+Skipcond 400
+Jump Fail20
+Load Passed
+Add One
+Store Passed
+Load ID20
+Output
+Jump Next20
+Fail20, Load Zero
+Output
+Next20, Load Zero
+
+/ Test 21: Skipcond 800 with negative AC; expected AC = 0.
+Load MinusOne
+Skipcond 800
+Jump False21
+Load One
+Jump End21
+False21, Load Zero
+End21, Store Scratch
+Store Actual
+Subt Expect21
+Skipcond 400
+Jump Fail21
+Load Passed
+Add One
+Store Passed
+Load ID21
+Output
+Jump Next21
+Fail21, Load Zero
+Output
+Next21, Load Zero
+
+/ Test 22: Skipcond 800 with zero AC; expected AC = 0.
+Load Zero
+Skipcond 800
+Jump False22
+Load One
+Jump End22
+False22, Load Zero
+End22, Store Scratch
+Store Actual
+Subt Expect22
+Skipcond 400
+Jump Fail22
+Load Passed
+Add One
+Store Passed
+Load ID22
+Output
+Jump Next22
+Fail22, Load Zero
+Output
+Next22, Load Zero
+
+/ Test 23: Skipcond 800 with positive AC; expected AC = 1.
+Load One
+Skipcond 800
+Jump False23
+Load One
+Jump End23
+False23, Load Zero
+End23, Store Scratch
+Store Actual
+Subt Expect23
+Skipcond 400
+Jump Fail23
+Load Passed
+Add One
+Store Passed
+Load ID23
+Output
+Jump Next23
+Fail23, Load Zero
+Output
+Next23, Load Zero
+
+/ Test 24: Jump skips poison and preserves AC; expected AC = 4.
+Load Four
+Jump DirectOK
+Load MinusOne
+DirectOK, Store Scratch
+Store Actual
+Subt Expect24
+Skipcond 400
+Jump Fail24
+Load Passed
+Add One
+Store Passed
+Load ID24
+Output
+Jump Next24
+Fail24, Load Zero
+Output
+Next24, Load Zero
+
+/ Test 25: JumpI follows pointer and preserves AC; expected AC = 5.
+Load Five
+JumpI PtrJump
+Load MinusOne
+IndirectOK, Store Scratch
+Store Actual
+Subt Expect25
+Skipcond 400
+Jump Fail25
+Load Passed
+Add One
+Store Passed
+Load ID25
+Output
+Jump Next25
+Fail25, Load Zero
+Output
+Next25, Load Zero
+
+/ Test 26: JnS first call executes body and returns; expected AC = 1.
+JnS Sub // problem
+Return1, Load Calls
+Store Actual
+Subt Expect26
+Skipcond 400
+Jump Fail26
+Load Passed
+Add One
+Store Passed
+Load ID26
+Output
+Jump Next26
+Fail26, Load Zero
+Output
+Next26, Load Zero
+
+/ Test 27: JnS saves correct first return address; expected AC = 0.
+Load Sub
+Subt AddrReturn1
+Store Actual
+Subt Expect27
+Skipcond 400
+Jump Fail27
+Load Passed
+Add One
+Store Passed
+Load ID27
+Output
+Jump Next27
+Fail27, Load Zero
+Output
+Next27, Load Zero
+
+/ Test 28: JnS second call executes body and returns; expected AC = 2.
+JnS Sub
+Return2, Load Calls
+Store Actual
+Subt Expect28
+Skipcond 400
+Jump Fail28
+Load Passed
+Add One
+Store Passed
+Load ID28
+Output
+Jump Next28
+Fail28, Load Zero
+Output
+Next28, Load Zero
+
+/ Test 29: JnS updates saved return address; expected AC = 0.
+Load Sub
+Subt AddrReturn2
+Store Actual
+Subt Expect29
+Skipcond 400
+Jump Fail29
+Load Passed
+Add One
+Store Passed
+Load ID29
+Output
+Jump Next29
+Fail29, Load Zero
+Output
+Next29, Load Zero
+
+/ Final output: number of successful checks, 0 to 29.
+Load Passed
+Output
+/ TA: execution must stop here, with no further output.
+Stop, Halt
+HaltFail, Load MinusOne
+Output
+Jump HaltFail
+
+/ JnS test subroutine. AC preservation is not assumed.
+Sub, HEX 0000
+Load Calls
+Add One
+Store Calls
+JumpI Sub
+
+/ Constants, expected results, and writable data.
+Zero, DEC 0
+One, DEC 1
+Two, DEC 2
+Three, DEC 3
+Four, DEC 4
+Five, DEC 5
+Six, DEC 6
+MinusOne, DEC -1
+Passed, DEC 0
+Actual, DEC 0
+Scratch, DEC 0
+Target, DEC 0
+Calls, DEC 0
+PtrSix, HEX 257
+PtrThree, HEX 254
+PtrTarget, HEX 25C
+AddrTarget, HEX 25C
+PtrJump, HEX 1FC
+AddrReturn1, HEX 20B
+AddrReturn2, HEX 20B
+ID1, DEC 1
+Expect1, DEC 1
+ID2, DEC 2
+Expect2, DEC -1
+ID3, DEC 3
+Expect3, DEC 2
+ID4, DEC 4
+Expect4, DEC 2
+ID5, DEC 5
+Expect5, DEC 3
+ID6, DEC 6
+Expect6, DEC 2
+ID7, DEC 7
+Expect7, DEC 4
+ID8, DEC 8
+Expect8, DEC -1
+ID9, DEC 9
+Expect9, DEC 0
+ID10, DEC 10
+Expect10, DEC 6
+ID11, DEC 11
+Expect11, DEC 5
+ID12, DEC 12
+Expect12, DEC 6
+ID13, DEC 13
+Expect13, DEC 6
+ID14, DEC 14
+Expect14, DEC 0
+ID15, DEC 15
+Expect15, DEC 1
+ID16, DEC 16
+Expect16, DEC 0
+ID17, DEC 17
+Expect17, DEC 0
+ID18, DEC 18
+Expect18, DEC 0
+ID19, DEC 19
+Expect19, DEC 1
+ID20, DEC 20
+Expect20, DEC 0
+ID21, DEC 21
+Expect21, DEC 0
+ID22, DEC 22
+Expect22, DEC 0
+ID23, DEC 23
+Expect23, DEC 1
+ID24, DEC 24
+Expect24, DEC 4
+ID25, DEC 25
+Expect25, DEC 5
+ID26, DEC 26
+Expect26, DEC 1
+ID27, DEC 27
+Expect27, DEC 0
+ID28, DEC 28
+Expect28, DEC 2
+ID29, DEC 29
+Expect29, DEC 0

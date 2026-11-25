@@ -1,0 +1,14 @@
+org 100
+
+load a
+add one
+store b
+
+load b
+output
+
+halt
+
+one, dec 1
+a, dec 10
+b, dec 0
